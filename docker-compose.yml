@@ -1,0 +1,22 @@
+version: '3'
+
+volumes:
+  data:
+  static:
+  media:
+
+services:
+  backend:
+    build: ./group_donations/
+    env_file: .env
+    volumes:
+      - data:/data/
+      - static:/app/collected_static/
+      - media:/app/media/
+  gateway:
+    build: ./nginx/
+    volumes:
+      - static:/app/collected_static/
+      - media:/app/media/
+    ports:
+      - 8000:80
